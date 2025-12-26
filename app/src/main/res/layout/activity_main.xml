@@ -14,10 +14,10 @@
         android:text="Log In"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.418"
+        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.704"
+        app:layout_constraintVertical_bias="0.692"
         tools:ignore="TouchTargetSizeCheck" />
 
     <Button
@@ -31,42 +31,11 @@
         app:iconSize="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.407"
+        app:layout_constraintHorizontal_bias="0.593"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.907"
+        app:layout_constraintVertical_bias="0.906"
         tools:ignore="TouchTargetSizeCheck" />
-
-    <EditText
-        android:id="@+id/Txtemail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.417"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.469"
-        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,DuplicateClickableBoundsCheck" />
-
-    <EditText
-        android:id="@+id/TxtPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.417"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.571"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
 
     <TextView
         android:id="@+id/textView"
@@ -76,23 +45,28 @@
         android:textSize="60px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.436"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.808"
+        app:layout_constraintVertical_bias="0.788"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="134dp"
-        android:layout_height="143dp"
+    <EditText
+        android:id="@+id/Txtemail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Email"
+        android:background="@drawable/rounded_corner"
+        android:padding="12dp"
+        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintHorizontal_bias="0.577"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.251"
-        app:srcCompat="@drawable/tutorlink" />
+        app:layout_constraintVertical_bias="0.469"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,DuplicateClickableBoundsCheck" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -100,7 +74,7 @@
         android:layout_height="27dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.134"
+        app:layout_constraintHorizontal_bias="0.219"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.47"
@@ -112,27 +86,57 @@
         android:layout_height="27dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.134"
+        app:layout_constraintHorizontal_bias="0.219"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.572"
         app:srcCompat="@drawable/baseline_lock_24" />
 
+    <EditText
+        android:id="@+id/TxtPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Password"
+        android:padding="12dp"
+        android:background="@drawable/rounded_corner"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.577"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.571"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="134dp"
+        android:layout_height="143dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.221"
+        app:srcCompat="@drawable/tutorlink" />
+
     <RadioGroup
         android:id="@+id/RadioGroup"
-        android:layout_width="241dp"
-        android:layout_height="66dp"
+        android:layout_width="261dp"
+        android:layout_height="68dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.453"
+        app:layout_constraintHorizontal_bias="0.594"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061">
+        app:layout_constraintVertical_bias="0.066">
 
         <RadioButton
             android:id="@+id/RadioTutor"
-            android:layout_width="104dp"
+            android:layout_width="123dp"
             android:layout_height="wrap_content"
             android:text="Tutor" />
 
