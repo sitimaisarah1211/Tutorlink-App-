@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                 email.text.clear()
                 txtPass.text.clear()
                 btnGoogle.isEnabled = true
-                btnGoogle.text = "Sign in with Google"
+                btnGoogle.text = "Sign in with "
             }, 2000)
         }
     }
