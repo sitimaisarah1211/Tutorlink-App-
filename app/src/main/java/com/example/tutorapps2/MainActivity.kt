@@ -1,105 +1,149 @@
 package com.example.tutorapps2
 
-import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Patterns
+import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var tilEmail: TextInputLayout
+    private lateinit var tilPass: TextInputLayout
+    private lateinit var emailEt: TextInputEditText
+    private lateinit var passEt: TextInputEditText
+    private lateinit var rgUserType: RadioGroup
     private lateinit var btnLogin: Button
     private lateinit var btnGoogle: Button
-    private lateinit var email: EditText
-    private lateinit var txtPass: EditText
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // Window insets for edge-to-edge
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        val mainView = findViewById<View>(R.id.main)
+        
+        // Capture original padding from XML to preserve it
+        val initialPaddingLeft = mainView.paddingLeft
+        val initialPaddingTop = mainView.paddingTop
+        val initialPaddingRight = mainView.paddingRight
+        val initialPaddingBottom = mainView.paddingBottom
+
+        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(
+                initialPaddingLeft + systemBars.left,
+                initialPaddingTop + systemBars.top,
+                initialPaddingRight + systemBars.right,
+                initialPaddingBottom + systemBars.bottom
+            )
             insets
         }
 
-        // Initialize views
-        email = findViewById(R.id.Txtemail)
-        txtPass = findViewById(R.id.TxtPass)
+        initializeViews()
+        setupListeners()
+    }
+
+    private fun initializeViews() {
+        tilEmail = findViewById(R.id.tilEmail)
+        tilPass = findViewById(R.id.tilPass)
+        emailEt = findViewById(R.id.Txtemail)
+        passEt = findViewById(R.id.TxtPass)
+        rgUserType = findViewById(R.id.RadioGroup)
         btnLogin = findViewById(R.id.btnlogin)
         btnGoogle = findViewById(R.id.btnGoogle)
+    }
 
-        val rgUserType = findViewById<RadioGroup>(R.id.RadioGroup)
-
-        // Login button click listener
+    private fun setupListeners() {
         btnLogin.setOnClickListener {
-            val emailText = email.text.toString().trim()
-            val passwordText = txtPass.text.toString().trim()
-
-            // Track all errors
-            val errors = mutableListOf<String>()
-
-            // Check ALL fields
-            if (emailText.isEmpty()) {
-                errors.add("Email is required")
-            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
-                errors.add("Enter a valid email address")
+            if (validateForm()) {
+                val role = getSelectedRole()
+                Toast.makeText(this, "Logging in as $role...", Toast.LENGTH_SHORT).show()
+                navigateToRoleActivity(role)
             }
-
-            if (passwordText.isEmpty()) {
-                errors.add("Password is required")
-            } else if (passwordText.length < 6) {
-                errors.add("Password must be 6+ characters")
-            }
-
-            if (rgUserType.checkedRadioButtonId == -1) {
-                errors.add("Please select Tutor or Student")
-            }
-
-            // Show ALL errors at once or proceed
-            if (errors.isNotEmpty()) {
-                Toast.makeText(this, errors.joinToString("\n"), Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-
-            // Get user type and login
-            val selectedId = rgUserType.checkedRadioButtonId
-            val userRole = if (selectedId == R.id.RadioTutor) "tutor" else "student"
-            Toast.makeText(this, "Login successful as $userRole!", Toast.LENGTH_SHORT).show()
-
-            // TODO: Your login logic
-
-            // Clear form
-            email.text.clear()
-            txtPass.text.clear()
-            rgUserType.clearCheck()
         }
 
-        // Google button click listener - Simple implementation
         btnGoogle.setOnClickListener {
-            Toast.makeText(this, "Google login clicked", Toast.LENGTH_SHORT).show()
-
-            // Simple simulation of Google login (for demo purposes)
-            // In real app, you would integrate Firebase Auth or Google Sign-In SDK here
-
-            // Simulate successful login after 2 seconds
-            btnGoogle.isEnabled = false
-            btnGoogle.text = "Signing in..."
-
-            android.os.Handler().postDelayed({
-                Toast.makeText(this, "Google login successful!", Toast.LENGTH_SHORT).show()
-                email.text.clear()
-                txtPass.text.clear()
-                btnGoogle.isEnabled = true
-                btnGoogle.text = "Sign in with Google"
-            }, 2000)
+            if (validateRoleSelection()) {
+                val role = getSelectedRole()
+                Toast.makeText(this, "Google Sign-In as $role...", Toast.LENGTH_SHORT).show()
+                simulateGoogleLogin(role)
+            }
         }
+    }
+
+    private fun navigateToRoleActivity(role: String) {
+        if (role == "Student") {
+            val intent = Intent(this, MainStudent::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            // TODO: Navigate to Tutor Activity
+            Toast.makeText(this, "Tutor dashboard not implemented yet", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun validateRoleSelection(): Boolean {
+        if (rgUserType.checkedRadioButtonId == -1) {
+            Toast.makeText(this, "Please select Tutor or Student first", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
+    private fun validateForm(): Boolean {
+        var isValid = true
+
+        // Reset errors
+        tilEmail.error = null
+        tilPass.error = null
+
+        // Validate Role
+        if (!validateRoleSelection()) return false
+
+        // Validate Email
+        val email = emailEt.text.toString().trim()
+        if (email.isEmpty()) {
+            tilEmail.error = "Email is required"
+            isValid = false
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            tilEmail.error = "Invalid email address"
+            isValid = false
+        }
+
+        // Validate Password
+        val password = passEt.text.toString().trim()
+        if (password.isEmpty()) {
+            tilPass.error = "Password is required"
+            isValid = false
+        } else if (password.length < 6) {
+            tilPass.error = "Password must be at least 6 characters"
+            isValid = false
+        }
+
+        return isValid
+    }
+
+    private fun getSelectedRole(): String {
+        return if (rgUserType.checkedRadioButtonId == R.id.RadioTutor) "Tutor" else "Student"
+    }
+
+    private fun simulateGoogleLogin(role: String) {
+        btnGoogle.isEnabled = false
+        Handler(Looper.getMainLooper()).postDelayed({
+            btnGoogle.isEnabled = true
+            Toast.makeText(this, "Google Sign-In Successful!", Toast.LENGTH_SHORT).show()
+            navigateToRoleActivity(role)
+        }, 2000)
     }
 }
